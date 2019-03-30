@@ -1,0 +1,28 @@
+//  This file builds the containers.
+
+.container {
+	@include containerStyle();
+}
+
+.container::after {
+	@include afterItem();
+}
+
+@each $gridBreak, $gridWidth in $gridBreaks {
+
+	@if $gridWidth != 0 {
+		@media (min-width: $gridWidth) {
+			.container {
+				max-width: round($gridWidth*$gridToContainerRatio);
+			}
+		}
+	}
+}
+
+.container-fluid {
+	@include containerStyle();
+}
+
+.container-fluid::after {
+	@include afterItem();
+}

@@ -1,0 +1,19 @@
+// 	Functions for the Basic Grid.
+
+// Pixel to percentage conversion.
+@function pxToPercent($pxNumber) {
+	$finalPercent: ($baseFontSizePx/16)*100;
+	@return #{$finalPercent};
+}
+
+// Pixel to Rem Conversion
+@function convertToRem($pixelSize) {
+	$remSize: $pixelSize / $baseFontPx;
+	@return #{$remSize}rem;
+}
+
+//Column measurement determination
+@function columnWidth($columnNum, $colMinWidth) {
+	$finalColWidth: (100 / $totalColumns) * $columnNum;
+	@return #{$finalColWidth};
+}

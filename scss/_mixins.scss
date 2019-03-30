@@ -1,0 +1,51 @@
+// 	Mixins for the Basic Grid.
+
+@mixin containerStyle() {
+	padding-right: $gridGutter/2;
+	padding-left: $gridGutter/2;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@mixin afterItem() {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+// Mixin to create one piece of the grid with a variable
+// placed in for push, pull, and offset.
+@mixin gridPiece($gridVar, $pieceVar, $styleVar) {
+	@for $s from 1 through $totalColumns {
+		.col-#{$gridVar}#{$pieceVar}-#{$s} {
+			#{$styleVar}: (100%/$totalColumns)*$s;
+		}
+	}
+}
+
+// Mixin to create the pieces of the grid per breakpoint.
+@mixin gridProcess($gridVar) {
+	// Creating the float designation on all columns.
+	$columnList: ();
+
+	@for $s from 1 through $totalColumns {
+		$columnList: append($columnList, unquote('.col-#{$gridVar}-#{$s}'), 'comma');
+	}
+
+	#{$columnList} {
+		float: left;
+	}
+
+	// Creating the individual column widths for each size.
+	@include gridPiece($gridVar, '', 'width');
+	
+	// Creating the individual column widths for each pull.
+	@include gridPiece($gridVar, '-pull', 'right');
+
+	// Creating the individual column widths for each push.
+	@include gridPiece($gridVar, '-push', 'left');
+
+	// Creating the individual column widths for each push.
+	@include gridPiece($gridVar, '-offset', 'margin-left');
+
+}
